@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Devi Institute of Technology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Main Page Styles */
+        .main-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('college image chat gpt.png');
+            background-size: cover;
+            background-position: center;
+            color: blue;
+            text-align: center;
+        } 
+        .main-page h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .enter-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .enter-btn:hover {
+            background-color: #ff5252;
+            transform: scale(1.05);
+        }
+        
+        /* College Page Styles (hidden initially) */
+        .college-page {
+            display: none;
+            width: 100%;
+            height: 150%;
+        }
+        
+        /* Navigation Bar */
+        nav {
+            background-color: #1e5799;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        nav a:hover {
+            transform: scale(1.2);
+            color: #ff6b6b;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .college-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .college-image:hover{
+            scale: 1.05;
+            transition:ease;
+            transition-duration: 2s;
+            border-color: #ff5252;
+            border-radius: 50px;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .section:hover{
+            scale: 1.1;
+            border-color: aquamarine;
+            transition: ease;
+            transition-duration: 1s;
+            background-color: #ff5252;
+            color: brown;            
+        }
+        .section h2 {
+            color: #1e5799;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 0.5rem;
+        }
+        
+        /* Forms (hidden initially) */
+        .form-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .form-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .form-content h2 {
+            margin-bottom: 1.5rem;
+            color: #1e5799;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background-color: #1e5799;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #ddd;
+            color: #333;
+        }
+        
+        .welcome-message {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.5rem;
+            color: #1e5799;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Page -->
+    <div class="main-page" id="mainPage">
+        <h1>Welcome to Shree Devi Institute of Technology</h1>
+        <button class="enter-btn" id="enterBtn">Enter</button>
+    </div>
+    
+    <!-- College Page -->
+    <div class="college-page" id="collegePage">
+        <nav>
+            <a href="#" class="nav-link" data-target="home">Home</a>
+            <a href="#" class="nav-link" data-target="login">Login/Register</a>
+            <a href="#" class="nav-link" onclick="navigateToSection('helpline')" data-target="helpline">Helpline</a>
+            <a href="#" class="nav-link" onclick="navigateToSection('About')"  data-target="About">About</a>
+            <a href="#" class="nav-link" onclick="navigateToSection('contact')" data-target="contact">Contact</a>
+            <!--<a href="#" class="nav-link" data-target="placement">Placement Details</a>!-->
+        </nav>
+        
+        <div class="content">
+            <img src="C:\Users\Asus\Desktop\FULL STACK DEVELPOMENT2\college image chat gpt.png" alt="College Image" class="college-image" style="height: 700px;">
+            
+            <div id="about" class="section">
+                <h2>About Our College</h2>
+                <p>Shree Devi Institute of Technology is a premier technical institute committed to providing quality education and fostering innovation. Established in 2001, our institute has been at the forefront of technical education, producing skilled professionals who contribute to the industry and society. 
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, modi! Incidunt ipsa quos amet necessitatibus a nulla quisquam blanditiis, labore voluptates in ab corporis alias autem facilis esse non impedit rem expedita vitae quod ut dolorum. Fuga nulla, molestiae quasi, iste cum, quas ducimus ut odio aliquid sint quidem amet!
+                </p>
+                <p>With state-of-the-art infrastructure, experienced faculty, and a vibrant campus life, we provide an ideal environment for students to grow academically and personally.
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat incidunt aperiam enim iure asperiores quibusdam numquam maxime, magni consectetur commodi odit quasi fuga ad temporibus eius nostrum veritatis? Iure iusto consectetur optio unde voluptas atque commodi! Esse libero eos minima nulla sed, culpa itaque rerum quaerat illo, ut minus animi.
+                </p>
+            </div>
+            <div id="contact" class="section">
+                <h2>Contact</h2>
+                <h1>+91-123456789</h1>
+                <h3>Address: Mangalore - 575 006, Karnataka, India</h3>
+            </div>
+            <div id="helpline" class="section">
+                <h2>Helpline</h2>
+                <p>For assistance, call +91 824 1234567 or email info@sdit.edu.in.</p>
+            </div>
+            <div class="section" style="background-color:aliceblue;">
+                <h2>Upcoming Events</h2>
+                <ul>
+                    <li>surabhi - December 15-16, 2025</li>
+                    <li>Annual Sports Meet - June 5-7, 2025</li>
+                    <li>Cultural Fest - August 12-14, 2025</li>   
+                    <li>Placement Drive - February 10-12, 2026</li>
+                </ul>
+            </div>
+            
+            <div class="section" style="background-color: aliceblue;">
+                <h2>Location</h2>
+                <p>Shree Devi Institute of Technology</p>
+                <p>Mangalore - 575 006</p>
+                <p>Karnataka, India</p>
+                <p>Phone: +91 824 1234567</p>
+                <p>Email: info@sdit.edu.in</p>
+                <div style="height: 300px; background-color: aliceblue; margin-top: 1rem; display: flex; justify-content: center; align-items: center;">
+
+                    <a href="https://www.bing.com/maps?&mepi=127~Directions~Unknown~Direction_Button&ty=0&rtp=pos.12.902300834655762_74.87020111083984__Shree%20Devi%20Institute%20of%20Technology__e_~&mode=d&v=2&sV=1" target="shree_devi"><button ><b>Location</b></button></a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Welcome Message (after login) -->
+    <div class="welcome-message" id="welcomeMessage">
+        <h2>Welcome to Shree Devi Institute of Technology Website!</h2>
+        <p>You have successfully logged in.</p>
+        <button class="btn btn-primary" id="continueBtn">Continue</button>
+    </div>
+    
+    <!-- Login Form -->
+    <div class="form-container" id="loginForm">
+        <div class="form-content">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" id="showRegisterBtn">Register</button>
+                <button class="btn btn-primary" id="loginBtn">Login</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Register Form -->
+    <div class="form-container" id="registerForm">
+        <div class="form-content">
+            <h2>Register</h2>
+            <div class="form-group">
+                <label for="regName">Full Name</label>
+                <input type="text" id="regName" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+                <label for="regConfirmPassword">Confirm Password</label>
+                <input type="password" id="regConfirmPassword" placeholder="Confirm your password">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" id="showLoginBtn">Back to Login</button>
+                <button class="btn btn-primary" id="registerBtn">Register</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Other forms would follow similar structure -->
+    
+    <script>
+        // DOM Elements
+        const mainPage = document.getElementById('mainPage');
+        const collegePage = document.getElementById('collegePage');
+        const enterBtn = document.getElementById('enterBtn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegisterBtn = document.getElementById('showRegisterBtn');
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const continueBtn = document.getElementById('continueBtn');
+        
+        // Event Listeners
+        enterBtn.addEventListener('click', () => {
+            mainPage.style.display = 'none';
+            collegePage.style.display = 'block';
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('data-target');
+                
+                if (target === 'login') {
+                    loginForm.style.display = 'flex';
+                } 
+                // Other navigation links would show their respective forms
+                // For this example, we're only implementing login/register
+            });
+        });
+        
+        showRegisterBtn.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+        });
+        
+        showLoginBtn.addEventListener('click', () => {
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'flex';
+        });
+        
+        loginBtn.addEventListener('click', () => {
+            // In a real app, you would validate credentials here
+            loginForm.style.display = 'none';
+            welcomeMessage.style.display = 'block';
+        });
+        
+        registerBtn.addEventListener('click', () => {
+            // In a real app, you would register the user here
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'flex';
+            alert('Registration successful! Please login.');
+        });
+        function navigateToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        continueBtn.addEventListener('click', () => {
+            welcomeMessage.style.display = 'none';
+            collegePage.style.display = 'block';
+        });
+        
+        // Close forms when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginForm) {
+                loginForm.style.display = 'none';
+            }
+            if (e.target === registerForm) {
+                registerForm.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
